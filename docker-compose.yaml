@@ -11,6 +11,8 @@ services:
       context: ./
     ports:
       - "8000:8000"
+    volumes:
+      - ./catloader/db:/app/catloader/db
     command: [ "python3", "./catloader/manage.py", "runserver", "0.0.0.0:8000" ]
 
   worker:
