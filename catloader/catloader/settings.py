@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'django_celery_beat',
 
     'main.apps.MainConfig',
-    'main.apps.ApiConfig',
+    'api.apps.ApiConfig',
 ]
 
 MIDDLEWARE = [
