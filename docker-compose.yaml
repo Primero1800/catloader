@@ -12,3 +12,12 @@ services:
     ports:
       - "8000:8000"
     command: [ "python3", "./catloader/manage.py", "runserver", "0.0.0.0:8000" ]
+
+  worker:
+    restart: always
+    build:
+      context: ./
+    volumes:
+      - ./catloader/cats:/app/catloader/cats
+    command: [ "celery", "--workdir=./catloader", "-A", "catloader", "worker"]
+
