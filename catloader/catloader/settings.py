@@ -88,7 +88,8 @@ DATABASES = {
 }
 
 
-CELERY_BROKER_URL = "redis://redis:6379"
+CELERY_BROKER_URL = 'amqp://guest:guest@rabbitmq:5672//'
+#CELERY_BROKER_URL = "redis://redis:6379"
 
 
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'

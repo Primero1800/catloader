@@ -1,9 +1,20 @@
 version: "3.9"
 
 services:
-  redis:
-    image: redis
+
+#  redis:
+#    image: redis
+#    restart: always
+
+  rabbitmq:
+    image: rabbitmq:management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
     restart: always
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
 
   webapp:
     restart: always
@@ -32,4 +43,13 @@ services:
       - ./catloader/db:/app/catloader/db
 #    command: [ "celery",  "--workdir=./catloader", "-A",  "catloader",  "beat", "-l", "INFO", "--scheduler", "django_celery_beat.schedulers:DatabaseScheduler"]
     command: [ "celery",  "--workdir=./catloader", "-A",  "catloader",  "beat", "-l", "INFO"]
+
+  flower:
+    restart: always
+    build:
+      context: ./
+    ports:
+      - "5555:5555"
+#    command: [ "celery", "-A", "catloader", "flower", "--broker=amqp://guest:guest@rabbitmq//" ]
+    command: [ "celery", "--workdir=./catloader", "-A", "catloader", "flower" ]
 
