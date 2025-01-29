@@ -30,5 +30,6 @@ services:
     volumes:
       - ./catloader/cats:/app/catloader/cats
       - ./catloader/db:/app/catloader/db
-    command: [ "celery",  "--workdir=./catloader", "-A",  "catloader",  "beat", "-l", "INFO", "--scheduler", "django_celery_beat.schedulers:DatabaseScheduler"]
+#    command: [ "celery",  "--workdir=./catloader", "-A",  "catloader",  "beat", "-l", "INFO", "--scheduler", "django_celery_beat.schedulers:DatabaseScheduler"]
+    command: [ "celery",  "--workdir=./catloader", "-A",  "catloader",  "beat", "-l", "INFO"]
 
