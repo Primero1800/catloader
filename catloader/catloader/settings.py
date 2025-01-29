@@ -85,7 +85,7 @@ WSGI_APPLICATION = 'catloader.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': os.getenv('DB_ENGINE'),
-        'HOST':  os.getenv("DB_HOST"),
+        'HOST':  os.getenv("DB_HOST"),  # host.docker.internal
         'PORT': os.getenv("DB_PORT"),
         'USER': os.getenv('DB_USER'),
         'PASSWORD': os.getenv('DB_PASSWORD'),
@@ -102,7 +102,6 @@ CELERY_RESULT_BACKEND = 'django-db'
 CELERY_CACHE_BACKEND = 'django-cache'
 
 CELERY_RESULT_EXTENDED = True
-
 
 
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
