@@ -50,6 +50,6 @@ services:
       context: ./
     ports:
       - "5555:5555"
-#    command: [ "celery", "-A", "catloader", "flower", "--broker=amqp://guest:guest@rabbitmq//" ]
-    command: [ "celery", "--workdir=./catloader", "-A", "catloader", "flower" ]
+    command: [ "celery", "--workdir=./catloader", "-A", "catloader", "flower", "--broker=amqp://guest:guest@rabbitmq//" ]
+#    command: [ "celery", "--workdir=./catloader", "-A", "catloader", "flower" ]
 

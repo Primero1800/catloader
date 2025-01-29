@@ -20,8 +20,8 @@ def import_image_of_cat(self, *args, **kwargs):
     headers = self.request.headers
     if headers:
         print("Headers:")
-        for key, value in headers.items():
-            print(f"{key}: {value}")
+        print(f"********** {headers}, items: {headers.items()}")
+        [print(f"key={key}, value={value}") for key, value in headers.items()]
     else:
         print("No headers available.")
 
@@ -45,4 +45,4 @@ def import_image_of_cat(self, *args, **kwargs):
         else:
             file.write('No response error'.encode())
 
-        return True
+    return str(file_name)

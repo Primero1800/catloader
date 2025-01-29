@@ -1,3 +1,5 @@
+import json
+
 from django_celery_beat.models import IntervalSchedule, PeriodicTask
 from rest_framework import serializers
 
@@ -19,7 +21,9 @@ class PeriodicTaskSerializer(serializers.ModelSerializer):
             'name': attrs.get('name'),
             'task': attrs.get('task')
         }
-        attrs['headers'] = headers_dict
+        attrs['headers'] = json.dumps(
+            {"headers":headers_dict}
+        )
         if not attrs['args']:
             attrs['args'] = []
         if not attrs['kwargs']:
