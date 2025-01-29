@@ -16,12 +16,13 @@ def add_ff(x, y):
 
 @shared_task(bind=True)
 def import_image_of_cat(self, *args, **kwargs):
-
+    periodictask_name = ''
     headers = self.request.headers
     if headers:
         print("Headers:")
         print(f"********** {headers}, items: {headers.items()}")
         [print(f"key={key}, value={value}") for key, value in headers.items()]
+        periodictask_name = headers.get('name', '')
     else:
         print("No headers available.")
 
@@ -34,7 +35,7 @@ def import_image_of_cat(self, *args, **kwargs):
         file_ext = response.headers.get("Content-Type").split('/')[1]
     else:
         file_ext = '.err'
-    file_name = settings.BASE_DIR / 'cats' / (str(uuid.uuid4()) + '.' + file_ext)
+    file_name = settings.BASE_DIR / 'cats' / (periodictask_name + str(uuid.uuid4()) + '.' + file_ext)
 
     with open(file_name, 'wb') as file:
         if response and response.status_code == 200:
