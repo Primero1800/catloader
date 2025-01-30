@@ -5,7 +5,7 @@ services:
   redis:
     image: redis
     restart: always
-    ports:
+#    ports:
 #      - "6379:6379"
 
 #  rabbitmq:
