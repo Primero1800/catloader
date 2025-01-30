@@ -22,6 +22,8 @@ services:
       context: ./
     ports:
       - "8000:8000"
+    environment:
+      DB_HOST: host.docker.internal
     volumes:
       - ./catloader/db:/app/catloader/db
     command: [ "python3", "./catloader/manage.py", "runserver", "0.0.0.0:8000" ]
@@ -32,6 +34,8 @@ services:
       context: ./
     volumes:
       - ./catloader/cats:/app/catloader/cats
+    environment:
+      DB_HOST: host.docker.internal
     command: [ "celery", "--workdir=./catloader", "-A", "catloader", "worker", "-l", "INFO"]
 
   celery-beat:
@@ -40,7 +44,9 @@ services:
       context: ./
     volumes:
       - ./catloader/cats:/app/catloader/cats
-      - ./catloader/db:/app/catloader/db
+      #- ./catloader/db:/app/catloader/db
+    environment:
+      DB_HOST: host.docker.internal
 #    command: [ "celery",  "--workdir=./catloader", "-A",  "catloader",  "beat", "-l", "INFO", "--scheduler", "django_celery_beat.schedulers:DatabaseScheduler"]
     command: [ "celery",  "--workdir=./catloader", "-A",  "catloader",  "beat", "-l", "INFO"]
 
