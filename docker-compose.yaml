@@ -30,7 +30,7 @@ services:
       - ./catloader/db:/app/catloader/db
     command: [ "python3", "./catloader/manage.py", "runserver", "0.0.0.0:8000" ]
 
-  celery-worker:
+  celery-worker1:
     restart: always
     build:
       context: ./
@@ -39,6 +39,16 @@ services:
     environment:
       DB_HOST: host.docker.internal
     command: [ "celery", "--workdir=./catloader", "-A", "catloader", "worker", "-l", "INFO"]
+
+  celery-worker2:
+    restart: always
+    build:
+      context: ./
+    volumes:
+      - ./catloader/cats:/app/catloader/cats
+    environment:
+      DB_HOST: host.docker.internal
+    command: [ "celery", "--workdir=./catloader", "-A", "catloader", "worker", "-l", "INFO" ]
 
   celery-beat:
     restart: always
