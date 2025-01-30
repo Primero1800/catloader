@@ -94,18 +94,6 @@ DATABASES = {
 }
 
 
-CELERY_BROKER_URL = 'amqp://guest:guest@rabbitmq:5672//'
-# CELERY_BROKER_URL = "redis://redis:6379"
-
-#CELERY_RESULTS_BACKEND = 'rpc://'
-CELERY_RESULT_BACKEND = 'django-db'
-CELERY_CACHE_BACKEND = 'django-cache'
-
-CELERY_RESULT_EXTENDED = True
-
-
-CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
-
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
@@ -130,7 +118,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 
@@ -146,3 +134,20 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# CELERY
+
+# CELERY_BROKER_URL = 'amqp://guest:guest@rabbitmq:5672//'
+CELERY_BROKER_URL = "redis://redis:6379"
+
+CELERY_TIMEZONE = TIME_ZONE
+
+#CELERY_RESULTS_BACKEND = 'rpc://'
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_CACHE_BACKEND = 'django-cache'
+
+CELERY_RESULT_EXTENDED = True
+
+
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'

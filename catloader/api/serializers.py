@@ -1,6 +1,7 @@
 import json
 
 from django_celery_beat.models import IntervalSchedule, PeriodicTask
+from django_celery_results.models import TaskResult
 from rest_framework import serializers
 
 
@@ -29,3 +30,9 @@ class PeriodicTaskSerializer(serializers.ModelSerializer):
         if not attrs['kwargs']:
             attrs['kwargs'] = {}
         return super().validate(attrs)
+
+
+class TaskResultSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TaskResult
+        fields = '__all__'

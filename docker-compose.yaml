@@ -2,19 +2,19 @@ version: "3.9"
 
 services:
 
-#  redis:
-#    image: redis
-#    restart: always
-
-  rabbitmq:
-    image: rabbitmq:management
-    ports:
-      - "5672:5672"
-      - "15672:15672"
+  redis:
+    image: redis
     restart: always
-    environment:
-      RABBITMQ_DEFAULT_USER: guest
-      RABBITMQ_DEFAULT_PASS: guest
+
+#  rabbitmq:
+#    image: rabbitmq:management
+#    ports:
+#      - "5672:5672"
+#      - "15672:15672"
+#    restart: always
+#    environment:
+#      RABBITMQ_DEFAULT_USER: guest
+#      RABBITMQ_DEFAULT_PASS: guest
 
   webapp:
     restart: always
@@ -57,5 +57,5 @@ services:
     ports:
       - "5555:5555"
     command: [ "celery", "--workdir=./catloader", "-A", "catloader", "flower", "--broker=amqp://guest:guest@rabbitmq//" ]
-#    command: [ "celery", "--workdir=./catloader", "-A", "catloader", "flower" ]
+#   command: [ "celery", "--workdir=./catloader", "-A", "catloader", "flower" ]
 
