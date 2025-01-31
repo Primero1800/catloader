@@ -63,12 +63,12 @@ def write_result(response, periodictask_name):
     return file_name
 
 
-@shared_task
-def add_ff(x, y):
+@shared_task(bind=True, max_retries=2)
+def add_ff(self, x, y):
     return x + y
 
 
-@shared_task(bind=True)
+@shared_task(bind=True, max_retries=2)
 def import_image_of_cat(self, *args, **kwargs):
     periodictask_name = get_periodictask_name(self)
 
@@ -81,7 +81,7 @@ def import_image_of_cat(self, *args, **kwargs):
     return str(result_image)
 
 
-@shared_task(bind=True)
+@shared_task(bind=True, max_retries=2)
 def import_image_of_dog(self, *args, **kwargs):
     periodictask_name = get_periodictask_name(self)
 
@@ -94,7 +94,7 @@ def import_image_of_dog(self, *args, **kwargs):
     return str(result_image)
 
 
-@shared_task(bind=True)
+@shared_task(bind=True, max_retries=2)
 def import_image_of_pet(self, *args, pet=None, **kwargs):
     periodictask_name = get_periodictask_name(self)
 
@@ -118,7 +118,7 @@ def import_image_of_pet(self, *args, pet=None, **kwargs):
     return str(result_image)
 
 
-@shared_task(bind=True)
+@shared_task(bind=True, max_retries=2)
 def problemator(self, *args, times=1, **kwargs):
     task_name = get_periodictask_name(self)
     if not args:
@@ -132,7 +132,7 @@ def problemator(self, *args, times=1, **kwargs):
             time.sleep(4)
 
 
-@shared_task(bind=True)
+@shared_task(bind=True, max_retries=2)
 def problemator_solver(self, *args, **kwargs):
     task_name = get_periodictask_name(self)
     redis_parameters = settings.REDIS_PARAMETERS
@@ -148,7 +148,7 @@ def problemator_solver(self, *args, **kwargs):
     return result
 
 
-@shared_task(bind=True)
+@shared_task(bind=True, max_retries=2)
 def clicker(self, *args, url="https://www.primero1800.store", **kwargs):
     task_name = get_periodictask_name(self)
 
