@@ -75,7 +75,7 @@ def big_add_ff(self, x, y):
         add_ff.s(y=10),
         add_ff.s(y=100),
     ).apply_async()
-    return result.get()
+    return result.id
 
 
 @shared_task(bind=True, max_retries=2)
