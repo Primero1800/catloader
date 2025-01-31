@@ -125,8 +125,24 @@ def problemator(self, *args, times=1, **kwargs):
         args = (1, 2, 3, 4,)
     res = 0
     redis_parameters = settings.REDIS_PARAMETERS
-    with redis.Redis(redis_parameters) as client:
+    with redis.Redis(**redis_parameters) as client:
         for _ in range(times):
             for arg in args:
                 client.lpush('problemator', json.dumps((arg, task_name)))
             time.sleep(4)
+
+
+@shared_task(bind=True)
+def problemator_solver(self, *args, **kwargs):
+    task_name = get_periodictask_name(self)
+    redis_parameters = settings.REDIS_PARAMETERS
+    with redis.Redis(**redis_parameters) as client:
+        result =''
+        while True:
+            answer = client.rpop('problemator')
+            if answer:
+                answer = str(json.loads(answer)[0])
+                result += answer
+            else:
+                break
+    return result

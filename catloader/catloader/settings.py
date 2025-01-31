@@ -145,7 +145,11 @@ CACHES = {
 }
 
 
-REDIS_PARAMETERS = "redis://redis:6379/1"
+REDIS_PARAMETERS = {
+    'host': 'redis',
+    'port': 6379,
+    'db': 1,
+}
 
 # CELERY
 
