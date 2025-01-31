@@ -25,15 +25,27 @@ def get_periodictask_name(task):
     return result
 
 
-def write_result(response, periodictask_name):
-    print(f"Inner result Response={response}")
+def get_filename(response, periodictask_name):
     try:
         if response and response.status_code == 200:
             file_ext = response.headers.get("Content-Type").split('/')[1]
         else:
             file_ext = '.err'
-        file_name = settings.BASE_DIR / 'cats' / (periodictask_name + str(uuid.uuid4()) + '.' + file_ext)
+    except (IndexError, AttributeError):
+        return False
+    return settings.BASE_DIR / 'cats' / (periodictask_name + str(uuid.uuid4()) + '.' + file_ext)
 
+def write_result(response, periodictask_name):
+    print(f"Inner result Response={response}")
+
+    file_name = get_filename(
+        response=response,
+        periodictask_name=periodictask_name
+    )
+    if not file_name:
+        return False
+
+    try:
         with open(file_name, 'wb') as file:
             if response and response.status_code == 200:
                 for chunk in response.iter_bytes(chunk_size=256):
@@ -43,7 +55,7 @@ def write_result(response, periodictask_name):
             else:
                 file.write('No response error'.encode())
     except Exception as exc:
-        print(response.status_code, periodictask_name, 'Error while writing file')
+        print(response.status_code, periodictask_name, f'Error while writing file: {exc}')
         return False
     return file_name
 
