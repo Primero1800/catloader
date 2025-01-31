@@ -1,8 +1,10 @@
 import json
+import time
 
 import httpx
 import uuid
 
+import redis
 from celery import shared_task
 from django.conf import settings
 
@@ -114,3 +116,17 @@ def import_image_of_pet(self, *args, pet=None, **kwargs):
     if not result_image:
         return None
     return str(result_image)
+
+
+@shared_task(bind=True)
+def problemator(self, *args, times=1, **kwargs):
+    task_name = get_periodictask_name(self)
+    if not args:
+        args = (1, 2, 3, 4,)
+    res = 0
+    redis_parameters = settings.REDIS_PARAMETERS
+    with redis.Redis(redis_parameters) as client:
+        for _ in range(times):
+            for arg in args:
+                client.lpush('problemator', json.dumps((arg, task_name)))
+            time.sleep(4)

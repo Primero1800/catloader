@@ -144,6 +144,9 @@ CACHES = {
     }
 }
 
+
+REDIS_PARAMETERS = "redis://redis:6379/1"
+
 # CELERY
 
 # CELERY_BROKER_URL = 'amqp://guest:guest@rabbitmq:5672//'
