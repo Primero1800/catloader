@@ -26,8 +26,8 @@ services:
       - "8000:8000"
     environment:
       DB_HOST: host.docker.internal
-    volumes:
-      - ./catloader/db:/app/catloader/db
+#    volumes:
+#      - ./catloader/db:/app/catloader/db
     command: [ "python3", "./catloader/manage.py", "runserver", "0.0.0.0:8000" ]
 
   celery-worker1:

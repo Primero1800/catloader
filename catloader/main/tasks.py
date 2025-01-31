@@ -35,6 +35,7 @@ def get_filename(response, periodictask_name):
         return False
     return settings.BASE_DIR / 'cats' / (periodictask_name + str(uuid.uuid4()) + '.' + file_ext)
 
+
 def write_result(response, periodictask_name):
     print(f"Inner result Response={response}")
 
