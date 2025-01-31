@@ -68,6 +68,6 @@ services:
       context: ./
     ports:
       - "5555:5555"
-    command: [ "celery", "--workdir=./catloader", "-A", "catloader", "flower", "--broker=amqp://guest:guest@rabbitmq//" ]
-#   command: [ "celery", "--workdir=./catloader", "-A", "catloader", "flower" ]
+    command: [ "celery", "--workdir=./catloader", "-A", "catloader", "flower", "--broker=redis://redis:6379/1" ]
+#    command: [ "celery", "--workdir=./catloader", "-A", "catloader", "flower" ]
 
