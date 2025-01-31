@@ -146,3 +146,18 @@ def problemator_solver(self, *args, **kwargs):
             else:
                 break
     return result
+
+
+@shared_task(bind=True)
+def clicker(self, *args, url="https://www.primero1800.store", **kwargs):
+    task_name = get_periodictask_name(self)
+
+    with httpx.Client() as client:
+        response = client.get(url, follow_redirects=True)
+
+    if response and response.status_code == 200:
+        return {
+            'task_name': task_name,
+            'url': url,
+            'response_status_code' :response.status_code,
+        }
