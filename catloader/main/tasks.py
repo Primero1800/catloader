@@ -70,11 +70,12 @@ def add_ff(self, x, y):
 
 @shared_task(bind=True, max_retries=2)
 def big_add_ff(self, x, y):
-   return chain(
+    result = chain(
         add_ff.s(x, y),
         add_ff.s(y=10),
         add_ff.s(y=100),
     ).apply_async()
+    return result.get()
 
 
 @shared_task(bind=True, max_retries=2)
@@ -146,7 +147,7 @@ def problemator_solver(self, *args, **kwargs):
     task_name = get_periodictask_name(self)
     redis_parameters = settings.REDIS_PARAMETERS
     with redis.Redis(**redis_parameters) as client:
-        result =''
+        result = ''
         while True:
             answer = client.rpop('problemator')
             if answer:
@@ -168,5 +169,5 @@ def clicker(self, *args, url="https://www.primero1800.store", **kwargs):
         return {
             'task_name': task_name,
             'url': url,
-            'response_status_code' :response.status_code,
+            'response_status_code': response.status_code,
         }
