@@ -5,7 +5,7 @@ import httpx
 import uuid
 
 import redis
-from celery import shared_task
+from celery import shared_task, chain
 from django.conf import settings
 
 from catloader.celery import app
@@ -66,6 +66,15 @@ def write_result(response, periodictask_name):
 @shared_task(bind=True, max_retries=2)
 def add_ff(self, x, y):
     return x + y
+
+
+@shared_task(bind=True, max_retries=2)
+def big_add_ff(self, x, y):
+   return chain(
+        add_ff.s(x, y),
+        add_ff.s(y=10),
+        add_ff.s(y=100),
+    ).apply_async()
 
 
 @shared_task(bind=True, max_retries=2)
